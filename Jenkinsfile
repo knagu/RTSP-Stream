@@ -7,7 +7,6 @@ node {
 	{       
         	sh label: '', script: '''  	
 	        docker build -t knagu/daxeosopentok:$BUILD_NUMBER -f docker/Dockerfile .
-        	docker rmi -f knagu/daxeosopentok:$BUILD_NUMBER
       		'''
 	  	echo "Build Successful"
 	}             
