@@ -208,7 +208,12 @@ static void on_otc_log_message(const char* message) {
 }
 
 int main(int argc, char** argv) {
-  
+
+
+  char* api_key = getenv("API_KEY");
+  char* session_id = getenv("SESSION_ID");
+  char* token = getenv("TOKEN");
+  char* rtsp_url = getenv("RTSP_URL");
   if (argc != 5){
   	printf("You haven't provided the required number of arguments");
 	return EXIT_FAILURE;
@@ -234,7 +239,7 @@ int main(int argc, char** argv) {
   session_callbacks.on_error = on_session_error;
 
   otc_session *session = nullptr;
-  session = otc_session_new(argv[1], argv[2], &session_callbacks);
+  session = otc_session_new(api_key, session_id, &session_callbacks);
 
   if (session == nullptr) {
     std::cout << "Could not create OpenTok session successfully" << std::endl;
@@ -249,7 +254,7 @@ int main(int argc, char** argv) {
   video_capturer->video_capturer_callbacks.start = video_capturer_start;
   video_capturer->video_capturer_callbacks.get_capture_settings = get_video_capturer_capture_settings;
 
-  video_capturer->rtsp_server_url = argv[4];
+  video_capturer->rtsp_server_url = rtsp_url;
   cv::VideoCapture opencv_video_capture(video_capturer->rtsp_server_url);
   if (!opencv_video_capture.isOpened()) {
     free(video_capturer);
@@ -281,7 +286,7 @@ int main(int argc, char** argv) {
   }
   renderer_manager.createRenderer(g_publisher);
 
-  otc_session_connect(session, argv[3]);
+  otc_session_connect(session, token);
 
   renderer_manager.runEventLoop();
 

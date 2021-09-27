@@ -6,6 +6,11 @@ COPY . .
 
 WORKDIR /home/pacat/RTSP-Stream-Video-Capturer/build
 
+ENV API_KEY ''
+ENV SESSION_ID ''
+ENV TOKEN ''
+ENV RTSP_URL ''
+
 USER root
 RUN CC=clang CXX=clang++ cmake .. && make
 
