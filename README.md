@@ -3,7 +3,6 @@
 ## To build the Docker image:
 
 ```bash
-cd docker
 docker build -t <username/repository>:<tag> -f docker/Dockerfile.
 ```
 
